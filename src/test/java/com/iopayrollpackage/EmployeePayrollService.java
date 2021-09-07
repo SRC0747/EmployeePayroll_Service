@@ -1,11 +1,15 @@
 package com.iopayrollpackage;
 
+import org.junit.jupiter.engine.Constants;
+
+import java.io.File;
 import java.util.*;
 
 public class EmployeePayrollService {
     int id;
     String name;
     double salary;
+    String directory,file;
     EmployeePayrollService(){
         id =0;
         name =" ";
@@ -28,13 +32,32 @@ public class EmployeePayrollService {
         System.out.println("Employee Name is:"+name);
         System.out.println("Employee Salary is:"+salary);
     }
+    //Checking File exists in that particular Directory or not.
+    public static int checkExists(String directory, String file) {
+        File dir = new File(directory);
+        File[] dir_contents = dir.listFiles();
+        String temp = file + ".MOD";
+        boolean check = new File(temp).exists();
+        System.out.println("Check"+check);  // -->always says false
+
+        for(int i = 0; i<dir_contents.length;i++) {
+            if(dir_contents[i].getName() == (file + ".MOD"))
+                return Constants.FILE_EXISTS;
+        }
+
+        return Constants.FILE_DOES_NOT_EXIST;
+    }
     public static void main(String[] args){
         System.out.println("Welcome to Employee Payroll Service System");
+        String directory,file;
         EmployeePayrollService employeePayrollService_1 = new EmployeePayrollService();
         EmployeePayrollService employeePayrollService_2 = new EmployeePayrollService();
         EmployeePayrollService employeePayrollService_3 = new EmployeePayrollService();
         employeePayrollService_1.display_EmployeeDetails();
         employeePayrollService_2.display_EmployeeDetails();
         employeePayrollService_3.display_EmployeeDetails();
+        int result_1 = employeePayrollService_1.checkExists(String directory, String file);
+        int result_2 = employeePayrollService_2.checkExists(String directory, String file);
+        int result_3 = employeePayrollService_3.checkExists(String directory, String file);
     }
 }
