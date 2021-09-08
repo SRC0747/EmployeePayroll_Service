@@ -3,6 +3,10 @@ package com.iopayrollpackage;
 import org.junit.jupiter.engine.Constants;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class EmployeePayrollService {
@@ -47,6 +51,27 @@ public class EmployeePayrollService {
 
         return Constants.FILE_DOES_NOT_EXIST;
     }
+
+    //Checking How Many Lines in the File.
+    public static long countLineJava8(String abc.txt) {
+
+        Path path = Paths.get(abc.txt);
+
+        long lines = 0;
+        try {
+
+            // much slower, this task better with sequence access
+            //lines = Files.lines(path).parallel().count();
+
+            lines = Files.lines(path).count();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return lines;
+
+    }
     public static void main(String[] args){
         System.out.println("Welcome to Employee Payroll Service System");
         String directory,file;
@@ -59,5 +84,9 @@ public class EmployeePayrollService {
         int result_1 = employeePayrollService_1.checkExists(String directory, String file);
         int result_2 = employeePayrollService_2.checkExists(String directory, String file);
         int result_3 = employeePayrollService_3.checkExists(String directory, String file);
+
+        //Checking How many lines are there in File.
+        System.out.println("No. of lines in the File is:"+countLineJava8(String abc.txt));
+
     }
 }
